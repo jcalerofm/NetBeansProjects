@@ -20,18 +20,22 @@ public class Conexion {
     }
 
     //Crear un metodo para Registrar cliente en la base de datos con los datos nombre, apellido1, apellido2, dni, direccion, telefono, email, fecha_registro
-    public static void registrarCliente(String nombre, String apellido1, String apellido2, String dni, String direccion, String telefono, String email, Date fecha_registro){
+    public static void registrarCliente(String nombre, String primer_apellido, String segundo_apellido, String dni, String direccion, int telefono, String email, Date fecha_registro){
+
+
         try {
             Connection cn = Conexion.conectar();
-            PreparedStatement pst = cn.prepareStatement("insert into clientes values(?,?,?,?,?,?,?,?)");
+            PreparedStatement pst = cn.prepareStatement("insert into clientes (nombre, primer_apellido, segundo_apellido, dni, direccion, telefono, email, fecha_registro) values(?,?,?,?,?,?,?,?)");
             pst.setString(1, nombre);
-            pst.setString(2, apellido1);
-            pst.setString(3, apellido2);
+            pst.setString(2, primer_apellido);
+            pst.setString(3, segundo_apellido);
             pst.setString(4, dni);
             pst.setString(5, direccion);
-            pst.setString(6, telefono);
+            pst.setInt(6, telefono);
             pst.setString(7, email);
             pst.setDate(8, fecha_registro);
+
+
             pst.executeUpdate();
             System.out.println("Cliente registrado con exito");
             cn.close();

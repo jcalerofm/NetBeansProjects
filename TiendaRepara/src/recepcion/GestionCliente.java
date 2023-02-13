@@ -1,29 +1,36 @@
 
 package recepcion;
 import javax.swing.*;
+
+import clases.Conexion;
+
 import java.awt.*;
+import java.sql.Date;
 
 public class GestionCliente extends JFrame {
-    public String nombreCliente;
-    public String apellido1Cliente;
-    public String apellido2Cliente;
-    public String dniCliente;
-    public String telefonoCliente;
-    public String emailCliente;
-    public String direccionCliente;
+    public String nombre;
+    public String primer_apellido;
+    public String segundo_apellido;
+    public String dni;
+    public int telefono;
+    public String email;
+    public String direccion;
+    public Date fecha_registro;
 
     public GestionCliente() {
         initComponents();
     }
 
     public void leerDatos(){
-        nombreCliente = tfNombre.getText();
-        apellido1Cliente = tfApellido1.getText();
-        apellido2Cliente = tfApellido2.getText();
-        dniCliente = tfDni.getText();
-        telefonoCliente = tfTelefono.getText();
-        emailCliente = tfEmail.getText();
-        direccionCliente = tfDireccion.getText();
+        nombre = tfNombre.getText();
+        primer_apellido = tfApellido1.getText();
+        segundo_apellido = tfApellido2.getText();
+        dni = tfDni.getText();
+        direccion = tfDireccion.getText();
+        telefono = Integer.parseInt(tfTelefono.getText());
+        email = tfEmail.getText();
+        fecha_registro = Date.valueOf(java.time.LocalDate.now());
+        System.out.println(fecha_registro);
     }
 
     @SuppressWarnings("unchecked")
@@ -182,7 +189,10 @@ public class GestionCliente extends JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        leerDatos();
+        //Call the method Conexion.registrarCliente() to insert the data that comes from leerDatos() method
+        Conexion.registrarCliente(nombre, primer_apellido, segundo_apellido, dni, direccion, telefono, email,fecha_registro);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -191,7 +201,7 @@ public class GestionCliente extends JFrame {
 
 
     public static void main(String args[]) {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
