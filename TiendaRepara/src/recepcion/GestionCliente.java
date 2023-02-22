@@ -192,6 +192,8 @@ public class GestionCliente extends JFrame {
         leerDatos();
         //Call the method Conexion.registrarCliente() to insert the data that comes from leerDatos() method
         Conexion.registrarCliente(nombre, primer_apellido, segundo_apellido, dni, direccion, telefono, email,fecha_registro);
+        //Display a message to the user
+        JOptionPane.showMessageDialog(null, "Cliente registrado con éxito");
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
