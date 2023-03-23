@@ -21,16 +21,29 @@ public class GestionCliente extends JFrame {
         initComponents();
     }
 
-    public void leerDatos(){
-        nombre = tfNombre.getText();
-        primer_apellido = tfApellido1.getText();
-        segundo_apellido = tfApellido2.getText();
-        dni = tfDni.getText();
-        direccion = tfDireccion.getText();
-        telefono = Integer.parseInt(tfTelefono.getText());
-        email = tfEmail.getText();
-        fecha_registro = Date.valueOf(java.time.LocalDate.now());
-        System.out.println(fecha_registro);
+    public void leerDatos() {
+      nombre = tfNombre.getText();
+      primer_apellido = tfApellido1.getText();
+      segundo_apellido = tfApellido2.getText();
+      dni = tfDni.getText();
+      direccion = tfDireccion.getText();
+
+      String telefonoInput = tfTelefono.getText();
+      if (!telefonoInput.isEmpty()) {
+        try {
+          telefono = Integer.parseInt(telefonoInput);
+        } catch (NumberFormatException e) {
+          JOptionPane.showMessageDialog(null, "Por favor, ingrese un número de teléfono válido.");
+          return;
+        }
+      } else {
+        telefono = 0;
+      }
+
+      email = tfEmail.getText();
+      fecha_registro = Date.valueOf(java.time.LocalDate.now());
+      System.out.println(fecha_registro);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -55,6 +68,9 @@ public class GestionCliente extends JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,7 +105,32 @@ public class GestionCliente extends JFrame {
         });
 
         jButton3.setText("Generar Informe PDF");
-        jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Modificar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Eliminar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("CREAR EXPEDIENTE");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,7 +148,12 @@ public class GestionCliente extends JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addGap(34, 34, 34)
-                                .addComponent(jButton2))
+                                .addComponent(jButton2)
+                                .addGap(33, 33, 33)
+                                .addComponent(jButton4)
+                                .addGap(41, 41, 41)
+                                .addComponent(jButton5)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -125,15 +171,18 @@ public class GestionCliente extends JFrame {
                                             .addComponent(tfNombre)
                                             .addComponent(tfApellido2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(61, 61, 61)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel7))
-                                        .addGap(29, 29, 29)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(tfDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                                            .addComponent(tfEmail)
-                                            .addComponent(tfTelefono)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel5)
+                                                    .addComponent(jLabel7))
+                                                .addGap(29, 29, 29)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(tfDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                                                    .addComponent(tfEmail)
+                                                    .addComponent(tfTelefono)))
+                                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)))
                                     .addComponent(tfDni, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
@@ -177,29 +226,105 @@ public class GestionCliente extends JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
                 .addGap(14, 14, 14))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        leerDatos();
-        //Call the method Conexion.registrarCliente() to insert the data that comes from leerDatos() method
-        Conexion.registrarCliente(nombre, primer_apellido, segundo_apellido, dni, direccion, telefono, email,fecha_registro);
-        //Display a message to the user
-        JOptionPane.showMessageDialog(null, "Cliente registrado con éxito");
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        leerDatos();
+
+      if (telefono != 0) {
+        Conexion.registrarCliente(nombre, primer_apellido, segundo_apellido, dni, direccion, telefono, email,
+            fecha_registro);
+        // Limpiar el formulario después del registro
+        tfNombre.setText("");
+        tfApellido1.setText("");
+        tfApellido2.setText("");
+        tfDni.setText("");
+        tfDireccion.setText("");
+        tfTelefono.setText("");
+        tfEmail.setText("");
+        JOptionPane.showMessageDialog(null, "Cliente registrado con éxito");
+      } else {
+        JOptionPane.showMessageDialog(null,
+            "No se pudo registrar el cliente. Verifique el número de teléfono ingresado.");
+      }
+
+    }
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+      leerDatos();
+
+      if (telefono != 0) {
+        Conexion.modifCliente(nombre, primer_apellido, segundo_apellido, dni, direccion, telefono, email, fecha_registro);
+        // Limpiar el formulario después de la modificación
+        tfNombre.setText("");
+        tfApellido1.setText("");
+        tfApellido2.setText("");
+        tfDni.setText("");
+        tfDireccion.setText("");
+        tfTelefono.setText("");
+        tfEmail.setText("");
+        JOptionPane.showMessageDialog(null, "Cliente modificado con éxito");
+      } else {
+        JOptionPane.showMessageDialog(null,
+            "No se pudo modificar el cliente. Verifique el número de teléfono ingresado.");
+      }
+    }
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
+      leerDatos();
+
+      if (!dni.isEmpty()) {
+        Conexion.eliminarCliente(dni);
+        // Limpiar el formulario después de la eliminación
+        tfNombre.setText("");
+        tfApellido1.setText("");
+        tfApellido2.setText("");
+        tfDni.setText("");
+        tfDireccion.setText("");
+        tfTelefono.setText("");
+        tfEmail.setText("");
+        JOptionPane.showMessageDialog(null, "Cliente eliminado con éxito");
+      } else {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese un DNI para eliminar");
+      }
+    }
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
+      leerDatos();
+      GestionExp ge = new GestionExp();
+      ge.setVisible(true);
+      ge.setLocationRelativeTo(null);
+      ge.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      this.dispose();
+
+    }
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+      leerDatos();
+
+      if (!dni.isEmpty()) {
+        Conexion.buscarCliente(dni, tfNombre, tfApellido1, tfApellido2, tfDireccion, tfTelefono, tfEmail);
+      } else {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese un DNI para buscar");
+      }
+    }
 
 
     public static void main(String args[]) {
@@ -234,6 +359,9 @@ public class GestionCliente extends JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
