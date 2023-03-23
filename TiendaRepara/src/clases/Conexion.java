@@ -116,4 +116,25 @@ public class Conexion {
         }
     }
 
+    public static void registrarExpediente(String tipo, String marca, String modelo, String numSerie, String comCliente, String estadoExp){
+        try {
+            Connection cn = Conexion.conectar();
+            PreparedStatement pst = cn.prepareStatement("insert into equipos (numero_serie, tipo, modelo, marca, comentario_cliente) values(?,?,?,?,?)");
+            PreparedStatement pst2 = cn.prepareStatement("insert into expedientes (estado) values(?)");
+            pst.setString(1, numSerie);
+            pst.setString(2, tipo);
+            pst.setString(3, modelo);
+            pst.setString(4, marca);
+            pst.setString(5, comCliente);
+            pst2.setString(1, estadoExp);
+
+
+            pst.executeUpdate();
+            pst2.executeUpdate();
+            System.out.println("Expediente registrado con exito");
+            cn.close();
+        } catch (SQLException e) {
+            System.err.println("Error al registrar expediente " + e);
+        }
+    }
 }
